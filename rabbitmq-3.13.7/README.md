@@ -1,0 +1,1 @@
+helm install rabbitmq ./rabbitmq-3.13.7 --namespace rabbitmq --create-namespace
