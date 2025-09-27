@@ -648,7 +648,7 @@ extraSecretsPrependReleaseName: false
 
 ## @param replicaCount Number of RabbitMQ replicas to deploy
 ##
-replicaCount: 3
+replicaCount: 1
 ## @param schedulerName Use an alternate scheduler, e.g. "stork".
 ## ref: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
 ##
@@ -953,7 +953,7 @@ persistence:
   ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
   ##   GKE, AWS & OpenStack)
   ##
-  storageClass: "hd03-cephfs-hdd-vc3lyqqb5b9w"
+  storageClass: "hd03-cephfs-hdd-vc1zmo2ez1zm"
   ## @param persistence.selector Selector to match an existing Persistent Volume
   ## selector:
   ##   matchLabels:
