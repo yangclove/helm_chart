@@ -1,0 +1,10 @@
+helm repo add jaegertracing https://jaegertracing.github.io/helm-charts
+
+helm repo update
+
+
+helm pull jaegertracing/jaeger --untar
+
+
+
+ helm pull grafana/loki --version 6.16.0  --untar
