@@ -552,7 +552,7 @@ server:
     ## Prometheus server data Persistent Volume existing claim name
     ## Requires server.persistentVolume.enabled: true
     ## If defined, PVC must be created manually before volume will be bound
-    existingClaim: ""
+    existingClaim: "pvc-capacity-userdata"
 
     ## Prometheus server data Persistent Volume mount root path
     ##
@@ -1330,7 +1330,7 @@ alertmanager:
     ## If undefined (the default) or set to null, no storageClassName spec is
     ## set, choosing the default provisioner.
     ##
-    # storageClass: "-"
+    storageClass: "unite-2-cephfs-hdd-vc65gs1zsqu5"
     accessModes:
       - ReadWriteOnce
     size: 2Gi
@@ -1351,7 +1351,7 @@ alertmanager:
 kube-state-metrics:
   ## If false, kube-state-metrics sub-chart will not be installed
   ##
-  enabled: true
+  enabled: false
 
 ## prometheus-node-exporter sub-chart configurable values
 ## Please see https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus-node-exporter
@@ -1359,7 +1359,7 @@ kube-state-metrics:
 prometheus-node-exporter:
   ## If false, node-exporter will not be installed
   ##
-  enabled: true
+  enabled: false
 
   rbac:
     pspEnabled: false
