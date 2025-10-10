@@ -46,13 +46,13 @@ loki:
     timeoutSeconds: 1
   image:
     # -- The Docker registry
-    registry: docker.io
+    registry: registry.cn-hangzhou.aliyuncs.com
     # -- Docker image repository
-    repository: grafana/loki
+    repository: yangchaolove-sync/grafana-loki
     # -- Overrides the image tag whose default is the chart's appVersion
     # TODO: needed for 3rd target backend functionality
     # revert to null or latest once this behavior is relased
-    tag: null
+    tag: 3.1.1
     # -- Overrides the image tag with an image digest
     digest: null
     # -- Docker image pull policy
@@ -693,11 +693,11 @@ lokiCanary:
   # -- Image to use for loki canary
   image:
     # -- The Docker registry
-    registry: docker.io
+    registry: registry.cn-hangzhou.aliyuncs.com
     # -- Docker image repository
-    repository: grafana/loki-canary
+    repository: yangchaolove-sync/grafana-loki-canary
     # -- Overrides the image tag whose default is the chart's appVersion
-    tag: null
+    tag: 3.1.1
     # -- Overrides the image tag with an image digest
     digest: null
     # -- Docker image pull policy
@@ -925,9 +925,9 @@ gateway:
     type: RollingUpdate
   image:
     # -- The Docker registry for the gateway image
-    registry: docker.io
+    registry: registry.cn-hangzhou.aliyuncs.com
     # -- The gateway image repository
-    repository: nginxinc/nginx-unprivileged
+    repository: yangchaolove-sync/nginxinc-nginx-unprivileged
     # -- The gateway image tag
     tag: 1.27-alpine
     # -- Overrides the gateway image tag with an image digest
@@ -2967,7 +2967,7 @@ ruler:
 memcached:
   image:
     # -- Memcached Docker image repository
-    repository: memcached
+    repository: registry.cn-hangzhou.aliyuncs.com/yangchaolove-sync/memcached
     # -- Memcached Docker image tag
     tag: 1.6.23-alpine
     # -- Memcached Docker image pull policy
@@ -2990,7 +2990,7 @@ memcachedExporter:
   # -- Whether memcached metrics should be exported
   enabled: true
   image:
-    repository: prom/memcached-exporter
+    repository: registry.cn-hangzhou.aliyuncs.com/yangchaolove-sync/prom-memcached-exporter
     tag: v0.14.2
     pullPolicy: IfNotPresent
   resources:
@@ -3305,7 +3305,7 @@ extraObjects: []
 sidecar:
   image:
     # -- The Docker registry and image for the k8s sidecar
-    repository: kiwigrid/k8s-sidecar
+    repository: registry.cn-hangzhou.aliyuncs.com/yangchaolove-sync/kiwigrid-k8s-sidecar
     # -- Docker image tag
     tag: 1.27.5
     # -- Docker image sha. If empty, no sha will be used
