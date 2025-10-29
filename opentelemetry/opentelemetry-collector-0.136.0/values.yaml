@@ -184,9 +184,11 @@ config:
     otlp:
       protocols:
         grpc:
-          endpoint: ${env:MY_POD_IP}:4317
+#          endpoint: ${env:MY_POD_IP}:4317
+          endpoint: 0.0.0.0:4317
         http:
-          endpoint: ${env:MY_POD_IP}:4318
+#          endpoint: ${env:MY_POD_IP}:4318
+          endpoint: 0.0.0.0:4318
     # if internalTelemetryViaOTLP.metrics.enabled = true, prometheus receiver will be removed
     prometheus:
       config:
@@ -215,7 +217,7 @@ config:
       logs:
         exporters:
           - debug
-          - otlp/aliyun
+#          - otlp/aliyun
         processors:
           - memory_limiter
           - batch
@@ -224,7 +226,7 @@ config:
       metrics:
         exporters:
           - debug
-          - otlp/aliyun
+#          - otlp/aliyun
         processors:
           - memory_limiter
           - batch
@@ -235,7 +237,7 @@ config:
       traces:
         exporters:
           - debug
-          - otlp/aliyun
+#          - otlp/aliyun
         processors:
           - memory_limiter
           - batch

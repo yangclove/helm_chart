@@ -264,8 +264,15 @@ server:
   ### The data directory used by prometheus to set --storage.tsdb.path
   ### When empty server.persistentVolume.mountPath is used instead
   storagePath: ""
+#    - "--storage.tsdb.path={{ default .Values.server.persistentVolume.mountPath .Values.storagePath }}"
+#  设置了 storagePath: /prometheus-data 最终启动命令 --storage.tsdb.path=/prometheus-data
+#  没设置（即为空字符串 ""） --storage.tsdb.path=/data  /data 来自 server.persistentVolume.mountPath 默认值）
 
+  #全局采集频率设置
   global:
+    #scrape_interval：默认每隔多久采集一次指标。
+    #scrape_timeout：单次采集超时时间。
+    #evaluation_interval：规则（rules）评估频率。
     ## How frequently to scrape targets by default
     ##
     scrape_interval: 1m
@@ -275,24 +282,29 @@ server:
     ## How frequently to evaluate rules
     ##
     evaluation_interval: 1m
+
+#  远程存储接口
   ## https://prometheus.io/docs/prometheus/latest/configuration/configuration/#remote_write
   ##
   remoteWrite: []
   ## https://prometheus.io/docs/prometheus/latest/configuration/configuration/#remote_read
-  ##
+  ##远程读取
   remoteRead: []
 
   ## https://prometheus.io/docs/prometheus/latest/configuration/configuration/#tsdb
   ##
   tsdb: {}
+    #  允许乱序样本的最大时间窗口
     # out_of_order_time_window: 0s
 
   ## https://prometheus.io/docs/guides/opentelemetry
-  ##
+  ## 协议	默认路径	用途
+  #HTTP	/otlp/v1/metrics	用于 OTLP HTTP 上报
+  #gRPC	:4317	用于 OTLP gRPC 上报（可配置）
   otlp: {}
-    # promote_resource_attributes: []
-    # keep_identifying_resource_attributes: false
-    # translation_strategy: NoUTF8EscapingWithSuffixes
+    # promote_resource_attributes: []  OTLP “资源属性（resource attributes）” 应该转化为 Prometheus 指标的 label。
+    # keep_identifying_resource_attributes: false  是否保留原始资源属性。
+    # translation_strategy: NoUTF8EscapingWithSuffixes  控制 Prometheus 如何转义或转换 OTLP 的 label 名。
 
   ## https://prometheus.io/docs/prometheus/latest/configuration/configuration/#exemplars
   ## Must be enabled via --enable-feature=exemplar-storage
@@ -463,12 +475,13 @@ server:
       ## Ref. https://gateway-api.sigs.k8s.io/guides/http-redirect-rewrite/
       httpsRedirect: false
 
-  ## Server Deployment Strategy type
+  ## Server Deployment Strategy type  先删除旧 Pod，再创建新 Pod（会有短暂中断）重新创建
   strategy:
     type: Recreate
 
   ## hostAliases allows adding entries to /etc/hosts inside the containers
   hostAliases: []
+  #[] Pod.spec.hostAliases 字段的封装
   #   - ip: "127.0.0.1"
   #     hostnames:
   #       - "example.com"
@@ -691,13 +704,13 @@ server:
   ## Prometheus server resource requests and limits
   ## Ref: http://kubernetes.io/docs/user-guide/compute-resources/
   ##
-  resources: {}
-    # limits:
-    #   cpu: 500m
-    #   memory: 512Mi
-    # requests:
-    #   cpu: 500m
-    #   memory: 512Mi
+  resources:
+     limits:
+       cpu: 500m
+       memory: 512Mi
+     requests:
+       cpu: 500m
+       memory: 512Mi
 
   # Required for use in managed kubernetes clusters (such as AWS EKS) with custom CNI (such as calico),
   # because control-plane managed by AWS cannot communicate with pods' IP CIDR and admission webhooks are not working
@@ -1308,7 +1321,7 @@ extraManifests: []
 alertmanager:
   ## If false, alertmanager will not be installed
   ##
-  enabled: true
+  enabled: false
 
   persistence:
     ## If true, storage will create or use Persistence Volume
@@ -1373,7 +1386,7 @@ prometheus-node-exporter:
 prometheus-pushgateway:
   ## If false, pushgateway will not be installed
   ##
-  enabled: true
+  enabled: false
 
   # Optional service annotations
   serviceAnnotations:
